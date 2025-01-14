@@ -17286,6 +17286,14 @@
     "named": false
   },
   {
+    "type": "block_comment",
+    "named": true
+  },
+  {
+    "type": "bottom_doc_comment",
+    "named": true
+  },
+  {
     "type": "break",
     "named": false
   },
@@ -17513,6 +17521,10 @@
   {
     "type": "do",
     "named": false
+  },
+  {
+    "type": "doc_comment",
+    "named": true
   },
   {
     "type": "edge",
@@ -17881,6 +17893,10 @@
   {
     "type": "library",
     "named": false
+  },
+  {
+    "type": "line_comment",
+    "named": true
   },
   {
     "type": "local",

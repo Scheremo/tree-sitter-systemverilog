@@ -16,7 +16,9 @@
 'use strict';
 
 const PREC = {
-  // Table 11-2—Operator precedence and associativity
+    // Table 11-2—Operator precedence and associativity
+  DOC_COMMENT: 39,         // /// //!
+  COMMENT: 38,             // //  /*  */
   PARENTHESIS: 37,         // () [] :: .                                          Left
   UNARY: 36,               // + - ! ~ & ~& | ~| ^ ~^ ^~ ++ -- (unary)
   POWER: 35,               // **                                                  Left
@@ -50,9 +52,9 @@ const PREC = {
   PROP_IFF: 11,            // iff                                                 Right
   PROP_UNTIL: 10,          // until, s_until, until_with, s_until_with, implies   Right
   PROP_INCIDENCE: 9,       // |->, |=>, #-#, #=#                                  Right
-  PROP_ALWAYS: 8           // always, s_always, eventually, s_eventually,          —
+    PROP_ALWAYS: 8,           // always, s_always, eventually, s_eventually,          —
                            // if-else, case , accept_on, reject_on,
-                           // sync_accept_on, sync_reject_on
+    // sync_accept_on, sync_reject_on
 };
 
 const BINARY_OP_TABLE = [
@@ -4302,14 +4304,26 @@ const rules = {
 
   // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
   // from: https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js
-  comment: $ => token(choice(
-    seq('//', /.*/), // $._one_line_comment -> seq('//', $.comment_text)
-    seq(             // $._block_comment
-      '/*',
-      /[^*]*\*+([^/*][^*]*\*+)*/,
-      '/'
-    )
-  )),
+  // comment: $ => token(choice(
+  //   seq('//', /.*/), // $._one_line_comment -> seq('//', $.comment_text)
+  //   seq(             // $._block_comment
+  //     '/*',
+  //     /[^*]*\*+([^/*][^*]*\*+)*/,
+  //     '/'
+  //   )
+  // )),
+
+    doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('///', /.*/))),
+    bottom_doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('//!', /[^\n]*/))),
+    line_comment: _ => token(prec(PREC.COMMENT, seq('//', /[^\n]*/))),
+
+    // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
+    block_comment: _ => token(prec(PREC.COMMENT,
+                                   seq(
+                                       '/*',
+                                       /[^*]*\*+([^/*][^*]*\*+)*/,
+                                       '/',
+                                   ))),
 
 
 // ** A.9.3 Identifiers
@@ -4710,7 +4724,7 @@ module.exports = grammar({
   name: 'verilog',
   word: $ => $.simple_identifier,
   rules: rules,
-  extras: $ => [/\s/, $.comment],
+    extras: $ => [/\s/, $.bottom_doc_comment, $.doc_comment, $.line_comment, $.block_comment],
 
   // Annex B
   reserved: {
@@ -6139,4 +6153,3 @@ module.exports = grammar({
   ],
 
 });
-
