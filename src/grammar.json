@@ -1,6 +1,6 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
-  "name": "verilog",
+  "name": "systemverilog",
   "word": "simple_identifier",
   "rules": {
     "source_file": {
@@ -33796,6 +33796,23 @@
       "type": "SYMBOL",
       "name": "_identifier"
     },
+    "comment": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "line_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "doc_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bottom_doc_comment"
+        }
+      ]
+    },
     "doc_comment": {
       "type": "TOKEN",
       "content": {
@@ -33810,7 +33827,7 @@
             },
             {
               "type": "PATTERN",
-              "value": ".*"
+              "value": "[^\\n]*"
             }
           ]
         }
@@ -36259,15 +36276,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "bottom_doc_comment"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "doc_comment"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "line_comment"
+      "name": "comment"
     },
     {
       "type": "SYMBOL",

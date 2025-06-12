@@ -4304,16 +4304,13 @@ const rules = {
 
   // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
   // from: https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js
-  // comment: $ => token(choice(
-  //   seq('//', /.*/), // $._one_line_comment -> seq('//', $.comment_text)
-  //   seq(             // $._block_comment
-  //     '/*',
-  //     /[^*]*\*+([^/*][^*]*\*+)*/,
-  //     '/'
-  //   )
-  // )),
+    comment: $ => choice(
+        $.line_comment,
+        $.doc_comment,
+        $.bottom_doc_comment,
+    ),
 
-    doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('///', /.*/))),
+    doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('///', /[^\n]*/))),
     bottom_doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('//!', /[^\n]*/))),
     line_comment: _ => token(prec(PREC.COMMENT, seq('//', /[^\n]*/))),
 
@@ -4721,10 +4718,10 @@ const rules = {
 // * Tree-sitter
 // ** Module exports
 module.exports = grammar({
-  name: 'verilog',
+  name: 'systemverilog',
   word: $ => $.simple_identifier,
   rules: rules,
-    extras: $ => [/\s/, $.bottom_doc_comment, $.doc_comment, $.line_comment, $.block_comment],
+    extras: $ => [/\s/, $.comment],
 
   // Annex B
   reserved: {
