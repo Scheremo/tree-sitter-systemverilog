@@ -33801,15 +33801,19 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "line_comment"
-        },
-        {
-          "type": "SYMBOL",
           "name": "doc_comment"
         },
         {
           "type": "SYMBOL",
           "name": "bottom_doc_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "line_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "block_comment"
         }
       ]
     },
@@ -36276,7 +36280,15 @@
     },
     {
       "type": "SYMBOL",
-      "name": "comment"
+      "name": "bottom_doc_comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "doc_comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "line_comment"
     },
     {
       "type": "SYMBOL",

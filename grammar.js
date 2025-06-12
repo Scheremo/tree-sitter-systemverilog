@@ -4305,9 +4305,10 @@ const rules = {
   // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
   // from: https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js
     comment: $ => choice(
-        $.line_comment,
         $.doc_comment,
         $.bottom_doc_comment,
+        $.line_comment,
+        $.block_comment,
     ),
 
     doc_comment: _ => token(prec(PREC.DOC_COMMENT, seq('///', /[^\n]*/))),
@@ -4721,7 +4722,7 @@ module.exports = grammar({
   name: 'systemverilog',
   word: $ => $.simple_identifier,
   rules: rules,
-    extras: $ => [/\s/, $.comment],
+    extras: $ => [/\s/, $.bottom_doc_comment, $.doc_comment, $.line_comment, $.block_comment],
 
   // Annex B
   reserved: {

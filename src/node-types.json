@@ -2575,29 +2575,6 @@
     }
   },
   {
-    "type": "comment",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "bottom_doc_comment",
-          "named": true
-        },
-        {
-          "type": "doc_comment",
-          "named": true
-        },
-        {
-          "type": "line_comment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "concatenation",
     "named": true,
     "fields": {},
@@ -17315,7 +17292,8 @@
   },
   {
     "type": "bottom_doc_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "break",
@@ -17543,7 +17521,8 @@
   },
   {
     "type": "doc_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "edge",
@@ -17915,7 +17894,8 @@
   },
   {
     "type": "line_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "local",
