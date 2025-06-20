@@ -3,8 +3,8 @@ name: Build and Upload Wheel
 
 on:
   push:
-    branches: [ pr/block_comment ]
-  pull_request:
+    tags:
+      - '*'           # Matches all tags (e.g. v0.1.0, release-1, etc.)
 
 jobs:
   build:
